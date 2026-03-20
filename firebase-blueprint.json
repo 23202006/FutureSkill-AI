@@ -1,0 +1,40 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Stores user information and roles.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "description": "Firebase Auth UID" },
+        "email": { "type": "string", "format": "email" },
+        "displayName": { "type": "string" },
+        "role": { "type": "string", "enum": ["student", "company", "admin"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "SkillAnalysis": {
+      "title": "Skill Analysis Record",
+      "description": "Stores results of skill gap analysis for students.",
+      "type": "object",
+      "properties": {
+        "studentId": { "type": "string" },
+        "gapScore": { "type": "number" },
+        "missingSkills": { "type": "array", "items": { "type": "string" } },
+        "roadmap": { "type": "array", "items": { "type": "object" } },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["studentId", "gapScore"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents."
+    },
+    "/analyses/{analysisId}": {
+      "schema": "SkillAnalysis",
+      "description": "Skill analysis records."
+    }
+  }
+}
